@@ -13,10 +13,13 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChatbotPage from './pages/ChatbotPage';
 import QuizPage from './pages/QuizPage';
+import DummyPage from './pages/DummyPage';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+
+  const isUser = user && user.role === 'user'; // Check if the logged-in user is a regular user
 
   // Initialize authentication state
   useEffect(() => {
@@ -27,16 +30,15 @@ const App = () => {
     <Router>
       <Navbar />
       <Stars />
-
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
           path="/signup"
-          element={isLoggedIn ? <Navigate to="/dashboard" /> : <SignupPage />}
+          element={isLoggedIn ? <Navigate to={isUser ? '/dashboard' : '/'} /> : <SignupPage />}
         />
         <Route
           path="/login"
-          element={isLoggedIn ? <Navigate to="/" /> : <LoginPage />}
+          element={isLoggedIn ? <Navigate to={isUser ? '/dashboard' : '/'} /> : <LoginPage />}
         />
         <Route
           path="/dashboard"
@@ -44,15 +46,19 @@ const App = () => {
         />
         <Route
           path="/chatbot"
-          element={isLoggedIn ? <ChatbotPage /> : <Navigate to="/login" />}
+          element={isLoggedIn && isUser ? <ChatbotPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dummy"
+          element={isLoggedIn && !isUser ? <DummyPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/about-us"
-          element={isLoggedIn ? <AboutUsPage /> : <Navigate to="/login" />}
+          element ={<AboutUsPage />} 
         />
         <Route
           path="/quiz"
-          element={isLoggedIn ? <QuizPage /> : <Navigate to="/login" />}
+          element={isLoggedIn && isUser ? <QuizPage /> : <Navigate to="/login" />}
         />
       </Routes>
 

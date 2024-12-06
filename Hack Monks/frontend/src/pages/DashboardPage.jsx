@@ -1,15 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FaUser, FaEnvelope, FaChalkboardTeacher } from 'react-icons/fa';
-import { Navigate } from 'react-router-dom';
 import Stars from '../components/Stars'; // Import the Stars component
 
 const DashboardPage = () => {
   const user = useSelector((state) => state.auth.user);
-
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+      
+  
 
   return (
     <div className="relative min-h-screen w-full">

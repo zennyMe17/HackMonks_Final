@@ -38,7 +38,7 @@ const SignupPage = () => {
 
       setTimeout(() => {
         navigate('/login');
-      }, 1500);
+      }, 1000);
     } catch (error) {
       toast.error(error.message || 'Signup Failed', { icon: <FaUser /> });
     }

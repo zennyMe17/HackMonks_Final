@@ -17,6 +17,7 @@ const authSlice = createSlice({
     signup(state, action) {
       state.user = { ...action.payload, role: action.payload.role || 'user' }; // Set user with role
       state.isLoggedIn = false; // Default to logged-out state after signup
+      localStorage.setItem('user', JSON.stringify(state.user)); // Persist user after signup
     },
     logout(state) {
       state.user = null;

@@ -3,14 +3,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
 import logo from '../assets/brand_logo.png';
-import { toast } from 'react-toastify'; // Import Toastify
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { toast } from 'react-toastify'; 
 import { FaLock } from 'react-icons/fa';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth); // Get the user object from Redux
   const location = useLocation();
 
   const handleLogout = () => {
@@ -23,6 +22,9 @@ const Navbar = () => {
     location.pathname === path
       ? 'text-blue-300 font-bold' // Active link color
       : 'text-white hover:text-gray-300'; // Default link color and hover effect
+
+  const isUser = user && user.role === 'user'; // Check if the logged-in user is a regular user
+  const isInstructor = user && user.role === 'instructor'; // Check if the logged-in user is an instructor
 
   return (
     <nav className="bg-transparent fixed top-0 left-0 right-0 p-4 z-10 w-10/12 mx-auto">
@@ -41,23 +43,43 @@ const Navbar = () => {
             Home
           </Link>
 
-          {/* Conditional Links for Authenticated Users */}
-          {isLoggedIn && (
+          <Link
+                to="/about-us"
+                className={`text-xl font-semibold font-sans ${getHighlightClass('/about-us')}`}
+              >
+                About Us
+              </Link>
+
+          {/* Links for regular users */}
+          {isLoggedIn && isUser && (
             <>
+              
               <Link
                 to="/chatbot"
                 className={`text-xl font-semibold font-sans ${getHighlightClass('/chatbot')}`}
               >
                 Chatbot
               </Link>
-              <Link
-                to="/about-us"
-                className={`text-xl font-semibold font-sans ${getHighlightClass('/about-us')}`}
-              >
-                About Us
-              </Link>
+              
             </>
           )}
+
+{isLoggedIn && !isUser && (
+            <>
+              
+              <Link
+                to="/dummy"
+                className={`text-xl font-semibold font-sans ${getHighlightClass('/chatbot')}`}
+              >
+                Dummy
+              </Link>
+              
+            </>
+          )}
+          
+
+          {/* Links for instructors and non-user roles */}
+          
         </div>
 
         {/* Login/Signup or Dashboard/Logout Buttons */}
@@ -79,12 +101,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link
+             <Link
                 to="/dashboard"
                 className="text-white text-xl font-semibold font-sans border border-white px-3 py-1.5 rounded-lg transition hover:shadow-[0px_0px_10px_2px_rgba(59,130,246,0.6)]"
               >
                 Dashboard
               </Link>
+              {/* Logout button */}
               <button
                 onClick={handleLogout}
                 className="text-white text-xl font-semibold font-sans border border-white px-3 py-1.5 rounded-lg transition hover:shadow-[0px_0px_10px_2px_rgba(220,38,38,0.6)]"
