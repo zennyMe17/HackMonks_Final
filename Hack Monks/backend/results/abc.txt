@@ -1,0 +1,11 @@
+abc
+1. How do you handle stress? - Very Well
+2. How do you deal with a difficult colleague? - Well
+3. What is your approach to teamwork? - Neutral
+4. How do you handle criticism? - Poorly
+5. How do you prioritize tasks? - Very Poorly
+6. How do you handle failure? - Very Well
+7. How do you maintain work-life balance? - Well
+8. How do you handle multiple projects at once? - Neutral
+9. How do you approach learning new skills? - Poorly
+10. How do you handle conflicts at work? - Neutral

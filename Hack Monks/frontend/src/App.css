@@ -1,0 +1,93 @@
+/* The stars will be animated using keyframes defined in tailwind.config.js */
+#stars, #stars2, #stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#title span {
+  background: -webkit-linear-gradient(white, #38495a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-toast-container {
+  width: 83.333333%; /* w-10/12 translates to 83.333333% in Tailwind */
+  max-width: 83.333333%; /* Ensure the toast doesn't exceed w-10/12 */
+  left: 71%; /* Center align horizontally */
+  top: 85%;
+  transform: translateX(-50%); /* Adjust to center */
+}
+
+/* Ensure placeholder color consistency */
+input::placeholder {
+color: #9ca3af !important; /* Use a consistent gray color */
+opacity: 1; /* Ensure the color is visible */
+}
+
+/* Autofill background and text fix */
+input:-webkit-autofill {
+background-color: transparent !important; /* Transparent to match input */
+-webkit-box-shadow: 0 0 0px 1000px #374151
+inset !important; /* Match the input background */
+-webkit-text-fill-color: #374151 !important; /* Force text color to white */
+}
+
+
+
+/* Ensure placeholder remains visible during autofill */
+input:-webkit-autofill::placeholder {
+color: #9ca3af !important; /* Consistent placeholder color */
+opacity: 1; /* Keep visible */
+}
+
+/* Fix for non-WebKit browsers */
+input:-moz-placeholder {
+color: #9ca3af;
+opacity: 1;
+}
+
+input::-moz-placeholder {
+color: #9ca3af;
+opacity: 1;
+}
+
+input:-ms-input-placeholder {
+color: #9ca3af;
+opacity: 1;
+}
+
+input::placeholder {
+color: #9ca3af;
+opacity: 1;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+}
+
+/* svg {
+  width: 100%;
+  height: 100%;
+  animation: rotate 20s linear infinite;
+}
+
+text {
+  fill: #333;
+  font-size: 10px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */
+
+
