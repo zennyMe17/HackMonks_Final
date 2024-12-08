@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
@@ -9,8 +9,23 @@ import { FaLock } from 'react-icons/fa';
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoggedIn, user } = useSelector((state) => state.auth); // Get the user object from Redux
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
   const location = useLocation();
+
+  const [isVisible, setIsVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+
+  // Handle scroll to toggle navbar visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      setIsVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -20,14 +35,18 @@ const Navbar = () => {
 
   const getHighlightClass = (path) =>
     location.pathname === path
-      ? 'text-blue-300 font-bold' // Active link color
-      : 'text-white hover:text-gray-300'; // Default link color and hover effect
+      ? 'text-blue-300 font-bold'
+      : 'text-white hover:text-gray-300';
 
-  const isUser = user && user.role === 'user'; // Check if the logged-in user is a regular user
-  const isInstructor = user && user.role === 'instructor'; // Check if the logged-in user is an instructor
+  const isUser = user && user.role === 'user';
+  const isInstructor = user && user.role === 'instructor';
 
   return (
-    <nav className="bg-transparent fixed top-0 left-0 right-0 p-4 z-10 w-10/12 mx-auto">
+    <nav
+      className={`bg-transparent fixed top-0 left-0 right-0 p-4 z-10 w-10/12 mx-auto transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <div className="flex justify-between items-center">
         {/* Logo */}
         <Link to="/">
@@ -42,44 +61,38 @@ const Navbar = () => {
           >
             Home
           </Link>
-
           <Link
-                to="/about-us"
-                className={`text-xl font-semibold font-sans ${getHighlightClass('/about-us')}`}
-              >
-                About Us
-              </Link>
-
-          {/* Links for regular users */}
+            to="/about-us"
+            className={`text-xl font-semibold font-sans ${getHighlightClass('/about-us')}`}
+          >
+            About Us
+          </Link>
           {isLoggedIn && isUser && (
             <>
-              
               <Link
-                to="/chatbot"
-                className={`text-xl font-semibold font-sans ${getHighlightClass('/chatbot')}`}
+                to="/instructors"
+                className={`text-xl font-semibold font-sans ${getHighlightClass('/instructors')}`}
               >
-                Chatbot
+                Agri Mitra Santhe
               </Link>
-              
+              <Link
+                to="/transactions"
+                className={`text-xl font-semibold font-sans ${getHighlightClass('/transactions')}`}
+              >
+                Tutorials
+              </Link>
             </>
           )}
-
-{isLoggedIn && !isUser && (
+          {isLoggedIn && !isUser && (
             <>
-              
               <Link
-                to="/dummy"
-                className={`text-xl font-semibold font-sans ${getHighlightClass('/chatbot')}`}
+                to="/instructor-form"
+                className={`text-xl font-semibold font-sans ${getHighlightClass('/instructor-form')}`}
               >
-                Dummy
+                Santhe
               </Link>
-              
             </>
           )}
-          
-
-          {/* Links for instructors and non-user roles */}
-          
         </div>
 
         {/* Login/Signup or Dashboard/Logout Buttons */}
@@ -101,13 +114,12 @@ const Navbar = () => {
             </>
           ) : (
             <>
-             <Link
+              <Link
                 to="/dashboard"
                 className="text-white text-xl font-semibold font-sans border border-white px-3 py-1.5 rounded-lg transition hover:shadow-[0px_0px_10px_2px_rgba(59,130,246,0.6)]"
               >
                 Dashboard
               </Link>
-              {/* Logout button */}
               <button
                 onClick={handleLogout}
                 className="text-white text-xl font-semibold font-sans border border-white px-3 py-1.5 rounded-lg transition hover:shadow-[0px_0px_10px_2px_rgba(220,38,38,0.6)]"

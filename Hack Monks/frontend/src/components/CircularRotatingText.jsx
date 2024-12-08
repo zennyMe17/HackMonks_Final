@@ -52,7 +52,7 @@ const CircularRotatingText = () => {
           </defs>
           <text>
             <textPath xlinkHref="#rotatingTextPath" textLength="420">
-              CodeMonks - Almost Humans! CodeMonks - Almost Humans!
+            Agri Mitra ಆಗ್ರಿ ಮಿತ್ರ! Agri Mitra ಆಗ್ರಿ ಮಿತ್ರ!
             </textPath>
           </text>
         </svg>

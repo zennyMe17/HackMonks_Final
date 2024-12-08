@@ -10,16 +10,16 @@ const teamData = [
   },
   {
     id: 2,
-    name: "Jane Smith",
+    name: "Hemanth",
     image: "https://via.placeholder.com/150",
-    skills: "Backend Developer, Node.js, Express",
+    skills: "Full Stack Developer, MERN Stack",
     linkedin: "https://www.linkedin.com/in/janesmith",
     instagram: "https://www.instagram.com/janesmith",
     email: "mailto:janesmith@example.com",
   },
   {
     id: 3,
-    name: "Emily Johnson",
+    name: "Namokar",
     image: "https://via.placeholder.com/150",
     skills: "Full Stack Developer, MERN Stack",
     linkedin: "https://www.linkedin.com/in/emilyjohnson",
@@ -28,7 +28,7 @@ const teamData = [
   },
   {
     id: 4,
-    name: "Michael Brown",
+    name: "Rajath",
     image: "https://via.placeholder.com/150",
     skills: "UI/UX Designer, Figma, Adobe XD",
     linkedin: "https://www.linkedin.com/in/michaelbrown",

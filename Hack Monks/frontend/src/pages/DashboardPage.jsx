@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { getInstructorData } from '../services/api'; // Add API call for fetching instructor data
 import Stars from '../components/Stars'; // Import the Stars component
 
 const DashboardPage = () => {
   const user = useSelector((state) => state.auth.user);
-      
-  
+  const [loading, setLoading] = useState(true);
+
+  // Fetch instructor data to show booked slots for the user
+  useEffect(() => {
+    const fetchInstructorData = async () => {
+      try {
+        setLoading(true);
+        const instructors = await getInstructorData();
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching instructor data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchInstructorData();
+  }, [user.email]);
+
+  if (loading) {
+    return <p>Loading data...</p>;
+  }
 
   return (
     <div className="relative min-h-screen w-full">

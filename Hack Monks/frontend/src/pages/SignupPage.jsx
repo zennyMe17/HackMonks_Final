@@ -113,7 +113,7 @@ const SignupPage = () => {
             }`}
             onClick={() => handleRoleChange('user')}
           >
-            <FaUser /> User
+            <FaUser /> Farmer
           </button>
 
           <button
@@ -123,7 +123,7 @@ const SignupPage = () => {
             }`}
             onClick={() => handleRoleChange('instructor')}
           >
-            <FaChalkboardTeacher /> Instructor
+            <FaChalkboardTeacher /> Company
           </button>
         </div>
 

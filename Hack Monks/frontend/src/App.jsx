@@ -11,9 +11,10 @@ import DashboardPage from './pages/DashboardPage';
 import AboutUsPage from './pages/AboutUsPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ChatbotPage from './pages/ChatbotPage';
+import InstructorList from './pages/InstructorList';
 import QuizPage from './pages/QuizPage';
-import DummyPage from './pages/DummyPage';
+import InstructorForm from './pages/InstructorForm';
+import TransactionPage from './pages/TransactionPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -45,12 +46,21 @@ const App = () => {
           element={isLoggedIn ? <DashboardPage /> : <Navigate to="/login" />}
         />
         <Route
-          path="/chatbot"
-          element={isLoggedIn && isUser ? <ChatbotPage /> : <Navigate to="/login" />}
+          path="/instructors"
+          element={isLoggedIn && isUser ? <InstructorList /> : <Navigate to="/login" />}
         />
         <Route
-          path="/dummy"
-          element={isLoggedIn && !isUser ? <DummyPage /> : <Navigate to="/login" />}
+          path="/transactions"
+          element={isLoggedIn && isUser ? <TransactionPage /> : <Navigate to="/login" />}
+        />
+        <Route
+  path="/transactions"
+  element={isLoggedIn && isUser ? <Navigate to="/transactions" /> : <Navigate to="/login" />}
+/>
+
+        <Route
+          path="/instructor-form"
+          element={isLoggedIn && !isUser ? <InstructorForm /> : <Navigate to="/login" />}
         />
         <Route
           path="/about-us"

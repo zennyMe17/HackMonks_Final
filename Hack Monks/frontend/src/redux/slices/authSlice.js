@@ -1,34 +1,59 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null, // Load user from localStorage
-  isLoggedIn: !!localStorage.getItem('user'), // Determine login state from localStorage
+  user: null,
+  isLoggedIn: false,
 };
+
+// Safely parse JSON to prevent app crashes due to malformed data
+try {
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  if (storedUser) {
+    initialState.user = storedUser;
+    initialState.isLoggedIn = true;
+  }
+} catch (error) {
+  console.error('Failed to parse stored user data:', error);
+  // Proceed with defaults if parsing fails
+}
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     login(state, action) {
-      state.user = { ...action.payload, role: action.payload.role || 'user' }; // Set user with role
-      state.isLoggedIn = true; // Mark as logged in
-      localStorage.setItem('user', JSON.stringify(state.user)); // Persist user
+      const { payload } = action;
+      state.user = {
+        ...payload,
+        role: payload.role || 'user', // Default role to 'user' if not provided
+      };
+      state.isLoggedIn = true;
+      localStorage.setItem('user', JSON.stringify(state.user)); // Persist user data to localStorage
     },
     signup(state, action) {
-      state.user = { ...action.payload, role: action.payload.role || 'user' }; // Set user with role
-      state.isLoggedIn = false; // Default to logged-out state after signup
-      localStorage.setItem('user', JSON.stringify(state.user)); // Persist user after signup
+      const { payload } = action;
+      state.user = {
+        ...payload,
+        role: payload.role || 'user',
+      };
+      state.isLoggedIn = false; // User remains logged out until they log in
     },
     logout(state) {
       state.user = null;
-      state.isLoggedIn = false; // Reset login state
-      localStorage.removeItem('user'); // Clear user from localStorage
+      state.isLoggedIn = false;
+      localStorage.removeItem('user'); // Remove user data from localStorage
     },
     initializeAuth(state) {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        state.user = user;
-        state.isLoggedIn = true; // Set as logged in if user exists in localStorage
+      try {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+          state.user = storedUser;
+          state.isLoggedIn = true;
+        }
+      } catch (error) {
+        console.error('Failed to initialize auth state:', error);
+        state.user = null;
+        state.isLoggedIn = false;
       }
     },
   },
